@@ -31,6 +31,6 @@ class CreateEmployeeEngagementsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('employee_engagements');
+        Schema::dropIfExists('employee_engagements');
     }
 }

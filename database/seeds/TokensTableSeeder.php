@@ -11,7 +11,12 @@ class TokensTableSeeder extends Seeder
      */
     public function run()
     {
-      factory(App\Company::class, 1)->create();
-      factory(App\Token::class, 10)->create();
+      factory(App\User::class, 1)->create();
+      factory(App\QuestionCategory::class, 1)->create();
+      factory(App\WorkArea::class, 1)->create();
+      factory(App\EducationalLevel::class, 1)->create();
+      //factory(App\Company::class, 10)->create();
+      //factory(App\Token::class, 10)->create();
+      //factory(App\Question::class, 50)->create();
     }
 }

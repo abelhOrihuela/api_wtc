@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Token extends Model
 {
+  /*
   protected $hidden = [
-      'email', 'created_at', 'updated_at'
+      'created_at', 'updated_at'
   ];
+  */
+
+  protected $fillable=['status', 'token', 'email', 'company_id'];
 
   public function company(){
     return $this->belongsTo('App\Company', 'company_id', 'id');

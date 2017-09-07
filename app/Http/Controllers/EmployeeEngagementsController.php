@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\EmployeeEngagement;
+use App\Token;
 
 class EmployeeEngagementsController extends Controller
 {
@@ -29,8 +30,10 @@ class EmployeeEngagementsController extends Controller
     }else{
       $employee = EmployeeEngagement::create($input);
 
+      $token=Token::where('id', '=', $request->token_id)->first();
+      if($token->update(['status' => true])){
+        return $employee;
+      }
     }
-
-
   }
 }
