@@ -30,10 +30,10 @@ class EmployeeEngagementsController extends Controller
     }else{
       $employee = EmployeeEngagement::create($input);
 
-      $token=Token::where('id', '=', $request->token_id)->first();
-      if($token->update(['status' => true])){
-        return $employee;
-      }
+      // $token=Token::where('id', '=', $request->token_id)->first();
+      // if($token->update(['status' => true])){
+      //   return $employee;
+      // }
     }
   }
 }

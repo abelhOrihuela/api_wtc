@@ -116,8 +116,6 @@ class QuestionsController extends Controller
       'question' => 'required|min:10|max:255',
       'description' => 'required|max:255'
     ));
-
-
   }
 
   public function getQuestion($id){

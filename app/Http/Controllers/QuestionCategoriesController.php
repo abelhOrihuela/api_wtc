@@ -11,15 +11,49 @@ use DB;
 
 class QuestionCategoriesController extends Controller
 {
+  /**
+   * Catalogo de categotrias
+   */
   public function index(){
     $categories = QuestionCategory::all();
-
     return $categories;
   }
 
 
-  public function show(Request $request){
+  public function show(){
 
+    $statement="SELECT
+    SUM(qe.value) data,
+    q.question
+    FROM question_employees qe, questions q
+    WHERE qe.question_id=q.id GROUP BY q.id";
+
+    $result=DB::select(DB::raw($statement));
+    return $result;
+
+  }
+
+  /**
+   * Estdisticas de categorias
+   */
+  public function statisticsQuestionsCategories(){
+    $statement="SELECT qc.name,
+    qc.color,
+    qc.id,
+    SUM(qe.value) data
+    FROM question_employees qe, questions q, question_categories qc
+    WHERE q.id=qe.question_id
+    AND qc.id=q.question_category_id
+    GROUP BY qc.name, qc.color";
+
+    $result=DB::select(DB::raw($statement));
+    return $result;
+  }
+
+  /**
+   * Preguntas asociadas a una categoria
+   */
+  public function questionsOfCategory(Request $request){
 
     $questions = DB::table('questions')
     ->join('question_categories', 'questions.question_category_id', '=', 'question_categories.id')
@@ -30,7 +64,11 @@ class QuestionCategoriesController extends Controller
     return $questions;
   }
 
-  public function showDetailCuestion(Request $request){
+
+    /**
+     * Estdisticas de una pregunta
+     */
+  public function statisticsQuestion(Request $request){
     $statement = "SELECT COUNT(*) data,
     question_employees.value,
     questions.description,
@@ -49,7 +87,7 @@ class QuestionCategoriesController extends Controller
     WHEN 2 THEN '#1565C0'
     WHEN 3 THEN '#FFFF00'
     WHEN 4 THEN '#76FF03'
-    WHEN 5 THEN '#7E57C2'
+    WHEN 5 THEN '#80DEEA'
     WHEN 6 THEN '#FF9800'
     ELSE 'more'
     END as color

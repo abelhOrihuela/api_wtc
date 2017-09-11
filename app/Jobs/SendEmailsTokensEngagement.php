@@ -41,8 +41,11 @@ class SendEmailsTokensEngagement extends Job implements ShouldQueue
       $tokens=Token::where("company_id", "=", $this->company_id)->get();
       $company=Company::where("id", "=", $this->company_id)->first();
 
+      $link = 'http://wtc-talent.com/#/public/survey/';
+      // $link = 'http://localhost:8080/#/public/survey/';
+
       foreach ($tokens as $token) {
-        Mail::send('emails.engagement', [ 'link' => 'http://localhost:8080/#/public/survey/'.$token->token, 'company' => $company], function($message) use ($token, $company){
+        Mail::send('emails.engagement', [ 'link' => $link.$token->token, 'company' => $company], function($message) use ($token, $company){
           $message->from('abelorihuela@wtc-talent.com', 'Encuesta '.$company->name);
           $message->to($token->email, 'Buenas Tardes ...')->subject('WTC');
         });
